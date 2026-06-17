@@ -10,7 +10,14 @@
       <div class="spinner"></div>
     </div>
 
-    <template v-else-if="order">
+    <div v-else-if="!order" class="empty-state">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">订单不存在</div>
+      <div class="empty-desc">该订单可能已被删除或链接有误</div>
+      <button class="empty-btn" @click="$router.push({ name: 'orders' })">查看我的订单</button>
+    </div>
+
+    <template v-else>
       <div class="status-header" :class="order.status">
         <div class="status-title">{{ order.statusText }}</div>
         <div v-if="order.status === 'pending'" class="status-desc">请尽快完成付款</div>
@@ -515,6 +522,41 @@ onMounted(() => {
 .action-btn {
   flex: 1;
   height: 42px;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px var(--space-lg) var(--space-lg);
+}
+
+.empty-icon {
+  font-size: 72px;
+  margin-bottom: var(--space-lg);
+}
+
+.empty-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.empty-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xxl);
+}
+
+.empty-btn {
+  padding: var(--space-sm) var(--space-xxl);
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-full);
   font-size: var(--font-size-base);
   font-weight: 600;
 }

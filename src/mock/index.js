@@ -308,43 +308,7 @@ export const api = {
   async getOrderDetail(id) {
     await delay(300, 600)
     const orders = JSON.parse(localStorage.getItem('mock-orders') || '[]')
-    let order = orders.find(o => o.id === id)
-    if (!order) {
-      const sampleOrders = [
-        {
-          id: 'SO20240110002',
-          orderNo: 'SO20240110002',
-          status: 'shipped',
-          statusText: '待收货',
-          items: mockProducts.slice(2, 4).map(p => ({
-            productId: p.id,
-            name: p.name,
-            image: p.mainImage,
-            price: p.price,
-            quantity: 2,
-            skuSpec: p.skus[0]?.spec || {}
-          })),
-          totalAmount: 2598,
-          shippingFee: 0,
-          discountAmount: 0,
-          couponAmount: 0,
-          payAmount: 2598,
-          address: mockAddresses[0],
-          shippingMethod: mockShippingMethods[0],
-          remark: '请尽快发货',
-          payMethod: 'alipay',
-          createdAt: Date.now() - 7 * 86400000,
-          tracking: [
-            { time: Date.now() - 7 * 86400000, status: '订单提交成功', desc: '订单已提交' },
-            { time: Date.now() - 7 * 86400000 + 3600000, status: '支付成功', desc: '付款成功' },
-            { time: Date.now() - 6 * 86400000, status: '已发货', desc: '顺丰速运：SF1234567890，包裹已从仓库发出' },
-            { time: Date.now() - 5 * 86400000, status: '运输中', desc: '包裹已到达【北京转运中心】' },
-            { time: Date.now() - 1 * 86400000, status: '派送中', desc: '快递员正在为您派送，请保持电话畅通' }
-          ]
-        }
-      ]
-      order = sampleOrders.find(o => o.id === id) || sampleOrders[0]
-    }
+    const order = orders.find(o => o.id === id)
     if (!order) return response(null, false, '订单不存在')
     return response(order)
   },

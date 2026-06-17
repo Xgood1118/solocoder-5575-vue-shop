@@ -13,7 +13,14 @@
       <div class="spinner"></div>
     </div>
 
-    <template v-else-if="product">
+    <div v-else-if="!product" class="empty-state">
+      <div class="empty-icon">📦</div>
+      <div class="empty-title">商品不存在或已下架</div>
+      <div class="empty-desc">请检查商品链接是否正确</div>
+      <button class="empty-btn" @click="$router.push({ name: 'home' })">返回首页</button>
+    </div>
+
+    <template v-else>
       <div class="swiper-wrap" ref="swiperRef">
         <div class="swiper-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
           <div class="swiper-slide" v-for="(img, idx) in product.images" :key="idx">
@@ -825,5 +832,40 @@ watch(() => route.params.id, (newId) => {
 
 .action-icon {
   font-size: var(--font-size-md);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px var(--space-lg) var(--space-lg);
+}
+
+.empty-icon {
+  font-size: 72px;
+  margin-bottom: var(--space-lg);
+}
+
+.empty-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.empty-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xxl);
+}
+
+.empty-btn {
+  padding: var(--space-sm) var(--space-xxl);
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: 600;
 }
 </style>
